@@ -8,7 +8,6 @@ Have you ever played the classic game of PONG? PONG is one of the most classic v
 - You can change the game to light mode if the dark mode does not sit well with you
 - The game gets harder and more fun the longer it goes on
 - There will be power ups for both P1 ad P2
-- Fun music the players can listen to while they play! (Maybe)
 
 ## How To Get Started?
 
