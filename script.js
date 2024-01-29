@@ -96,6 +96,7 @@ const animate = () => {
     player1.draw()
     player2.draw()
     
+    //This blob of code is used for player movement
     if (keysDown.w && player1.positionY > 0) {
         player1.positionY -= 5
     }
@@ -111,7 +112,8 @@ const animate = () => {
 
     newBall.positionX += newBall.velocityX;
     newBall.positionY += newBall.velocityY;
-  
+    
+    //This blob of code is used for ball movement
     if (
         newBall.positionY + newBall.velocityY > canvas.height - newBall.size ||
         newBall.positionY + newBall.velocityY < 0
@@ -120,7 +122,9 @@ const animate = () => {
     }
     if (
         newBall.positionX + newBall.velocityX > canvas.width - newBall.size ||
-        newBall.positionX + newBall.velocityX < 0
+        newBall.positionX + newBall.velocityX < 0 ||
+        newBall.positionX + newBall.velocityX <= player1.positionX + DEFAULT_PLAYER_WIDTH && newBall.positionY + newBall.velocityY <= player1.positionY + player1.size && newBall.positionY + newBall.velocityY >= player1.positionY ||
+        newBall.positionX + newBall.velocityX >= player2.positionX && newBall.positionY + newBall.velocityY <= player2.positionY + player2.size && newBall.positionY + newBall.velocityY >= player2.positionY
     ) {
         newBall.velocityX = -newBall.velocityX;
     }
@@ -165,7 +169,6 @@ window.addEventListener("keydown", (key) => {
             keysDown.down = true
             break;
     }
-    console.log(keysDown)
 }, true)
 
 window.addEventListener("keyup", (key) => {
@@ -183,5 +186,4 @@ window.addEventListener("keyup", (key) => {
             keysDown.down = false
             break;
     }
-    console.log(keysDown)
 }, true)
