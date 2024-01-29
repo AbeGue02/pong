@@ -1,3 +1,11 @@
+html {
+    font-family: 'Press Start 2P', system-ui;
+}
+
+button {
+    font-family: 'Press Start 2P', system-ui;
+}
+
 #gameArea {
     background-color: black;
 }

@@ -131,14 +131,22 @@ const animate = () => {
         newBall.velocityY = -newBall.velocityY;
     }
     if (
-        newBall.positionX + newBall.velocityX > canvas.width - newBall.size ||
-        newBall.positionX + newBall.velocityX < 0 ||
         newBall.positionX + newBall.velocityX < player1.positionX + DEFAULT_PLAYER_WIDTH && newBall.positionY + newBall.velocityY < player1.positionY + player1.size && newBall.positionY + newBall.velocityY >= player1.positionY ||
         newBall.positionX + newBall.velocityX > player2.positionX - DEFAULT_PLAYER_WIDTH && newBall.positionY + newBall.velocityY < player2.positionY + player2.size && newBall.positionY + newBall.velocityY >= player2.positionY
     ) {
         // newBall.velocityX = -newBall.velocityX;
         newBall.speed += 0.05
         newBall.velocityX = newBall.velocityX > 0 ? -newBall.speed :  newBall.speed
+    }
+    if (
+        newBall.positionX + newBall.velocityX > canvas.width - newBall.size ||
+        newBall.positionX + newBall.velocityX < 0
+    ) {
+        newBall.positionX + newBall.velocityX > canvas.width - newBall.size ? player1.score++ : player2.score++
+
+        newBall.speed = 5
+        newBall.positionX = canvas.width / 2
+        newBall.positionY = canvas.height / 2
     }
   
     animationFrame = window.requestAnimationFrame(animate);
