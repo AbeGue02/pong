@@ -67,9 +67,9 @@ class Ball {
         this.size = DEFAULT_BALL_SIZE
         this.color = newColor
         this.speed = newSpeed
-        this.velocityX = 5
-        this.velocityY = 5
-    }
+        this.velocityX = this.speed
+        this.velocityY = this.speed
+    } 
     draw() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.positionX, this.positionY, this.size, this. size)
@@ -81,12 +81,22 @@ class Player {
         this.positionX = newX
         this.positionY = newY
         this.size = newSize
+        this.score = 0
     }
     draw() {
         ctx.fillStyle = "white";
         ctx.fillRect(this.positionX, this.positionY, DEFAULT_PLAYER_WIDTH, this.size)
     }
 };
+
+const newBall = new Ball(canvas.width / 2, (canvas.height / 2) - (DEFAULT_BALL_SIZE / 2), 'white', 5)
+const player1 = new Player(DEFAULT_PLAYER_OFFSET, (canvas.height / 2) - DEFAULT_PLAYER_OFFSET, DEFAULT_PLAYER_HEIGHT)
+const player2 = new Player(canvas.width - DEFAULT_PLAYER_OFFSET - DEFAULT_PLAYER_WIDTH, (canvas.height / 2) - DEFAULT_PLAYER_OFFSET, DEFAULT_PLAYER_HEIGHT)
+
+const game = {
+    
+}
+
 
 // FUNCTIONS
 
@@ -123,21 +133,22 @@ const animate = () => {
     if (
         newBall.positionX + newBall.velocityX > canvas.width - newBall.size ||
         newBall.positionX + newBall.velocityX < 0 ||
-        newBall.positionX + newBall.velocityX <= player1.positionX + DEFAULT_PLAYER_WIDTH && newBall.positionY + newBall.velocityY <= player1.positionY + player1.size && newBall.positionY + newBall.velocityY >= player1.positionY ||
-        newBall.positionX + newBall.velocityX >= player2.positionX && newBall.positionY + newBall.velocityY <= player2.positionY + player2.size && newBall.positionY + newBall.velocityY >= player2.positionY
+        newBall.positionX + newBall.velocityX < player1.positionX + DEFAULT_PLAYER_WIDTH && newBall.positionY + newBall.velocityY < player1.positionY + player1.size && newBall.positionY + newBall.velocityY >= player1.positionY ||
+        newBall.positionX + newBall.velocityX > player2.positionX - DEFAULT_PLAYER_WIDTH && newBall.positionY + newBall.velocityY < player2.positionY + player2.size && newBall.positionY + newBall.velocityY >= player2.positionY
     ) {
-        newBall.velocityX = -newBall.velocityX;
+        // newBall.velocityX = -newBall.velocityX;
+        newBall.speed += 0.05
+        newBall.velocityX = newBall.velocityX > 0 ? -newBall.speed :  newBall.speed
     }
   
     animationFrame = window.requestAnimationFrame(animate);
 }
 
+const resetGame = () => {
+    location.reload()
+}
+
 // CODE WILL DO DOWN HERE
-
-const newBall = new Ball(canvas.width / 2, (canvas.height / 2) - (DEFAULT_BALL_SIZE / 2), 'white', 0)
-const player1 = new Player(DEFAULT_PLAYER_OFFSET, (canvas.height / 2) - DEFAULT_PLAYER_OFFSET, DEFAULT_PLAYER_HEIGHT)
-const player2 = new Player(canvas.width - DEFAULT_PLAYER_OFFSET - DEFAULT_PLAYER_WIDTH, (canvas.height / 2) - DEFAULT_PLAYER_OFFSET, DEFAULT_PLAYER_HEIGHT)
-
 
 player1.draw()
 player2.draw()

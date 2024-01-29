@@ -9,12 +9,12 @@
     </head>
     <body>
         <h1>PONG</h1>
-        <div>
-            <button>2 Players</button>
-            <button>Light Mode</button>
-            <button>Reset Game</button>
+        <div id="optionsContainer">
+            <button class="options">2 Players</button>
+            <button class="options">Light Mode</button>
+            <button class="options" onclick="resetGame()">Reset Game</button>
         </div>
-        <div>
+        <div id="gameAreaContainer">
             <canvas id="gameArea" height="500px" width="700px"></canvas>
         </div>
         <div><span>Win Condition: </span><input id="winCondition" type="number" value="5"></div>
