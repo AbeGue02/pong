@@ -45,6 +45,7 @@
 
 const canvas = document.getElementById("gameArea");
 const ctx = canvas.getContext("2d");
+let isGameOver = false
 let animationFrame;
 
 const DEFAULT_PLAYER_WIDTH = 25
@@ -73,6 +74,23 @@ class Ball {
     draw() {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.positionX, this.positionY, this.size, this. size)
+    }
+    resetPosition() {
+        this.positionX = canvas.width / 2
+        this.positionY = canvas.height / 2
+        this.velocityX = 0
+        this.velocityY = 0
+        this.speed = 5
+
+        setTimeout(() => {
+            if (!isGameOver) {
+                this.shoot()
+            }
+        }, 2000)
+    }
+    shoot() {
+        this.velocityX = Math.floor(Math.random() * (this.speed - 2)) + 2  
+        this.velocityY = Math.floor(Math.random() * 2) === 0 ? this.speed - this.velocityX : -(this.speed - this.velocityX)
     }
 };
 
@@ -148,12 +166,20 @@ const animate = () => {
     ) {
         newBall.positionX + newBall.velocityX > canvas.width - newBall.size ? player1.changeScore() : player2.changeScore()
 
-        newBall.speed = 5
-        newBall.positionX = canvas.width / 2
-        newBall.positionY = canvas.height / 2
+        newBall.resetPosition()
+
+        // newBall.speed = 5
+        // newBall.positionX = canvas.width / 2
+        // newBall.positionY = canvas.height / 2
     }
   
     animationFrame = window.requestAnimationFrame(animate);
+}
+
+//Function checks if either player has won after there has been a point scored
+//If player won, display necessary things
+const checkWin = () => {
+
 }
 
 const resetGame = () => {
