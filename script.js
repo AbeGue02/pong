@@ -43,9 +43,12 @@
 
 */
 
+const winConditionText = document.querySelector('#winCondition')
 const canvas = document.getElementById("gameArea");
 const ctx = canvas.getContext("2d");
+let isGameRunning = false
 let isGameOver = false
+let winCondition = 5
 let animationFrame;
 
 const DEFAULT_PLAYER_WIDTH = 25
@@ -89,7 +92,7 @@ class Ball {
         }, 2000)
     }
     shoot() {
-        this.velocityX = Math.floor(Math.random() * (this.speed - 2)) + 2  
+        this.velocityX = Math.floor(Math.random() * 2) === 0 ? Math.floor(Math.random() * (this.speed - 2)) + 2 : -(Math.floor(Math.random() * (this.speed - 2)) + 2)
         this.velocityY = Math.floor(Math.random() * 2) === 0 ? this.speed - this.velocityX : -(this.speed - this.velocityX)
     }
 };
@@ -109,6 +112,7 @@ class Player {
     changeScore() {
         this.score++
         this.scoreText.innerHTML = this.score
+        checkWin()
     }
 };
 
@@ -123,7 +127,7 @@ const animate = () => {
     newBall.draw()
     player1.draw()
     player2.draw()
-    
+
     //This blob of code is used for player movement
     if (keysDown.w && player1.positionY > 0) {
         player1.positionY -= 5
@@ -152,11 +156,11 @@ const animate = () => {
     }
     //If ball bounces player1 or player2
     if (newBall.positionX + newBall.velocityX < player1.positionX + DEFAULT_PLAYER_WIDTH && newBall.positionX + newBall.velocityX > DEFAULT_PLAYER_OFFSET && newBall.positionY + newBall.velocityY < player1.positionY + player1.size && newBall.positionY + newBall.velocityY > player1.positionY) {
-        newBall.speed += 0.05
+        newBall.speed += 0.2
         newBall.velocityX = newBall.speed
     }
     if (newBall.positionX + newBall.velocityX + newBall.size > player2.positionX && newBall.positionX + newBall.velocityX + newBall.size < canvas.width - DEFAULT_PLAYER_OFFSET && newBall.positionY + newBall.velocityY < player2.positionY + player2.size && newBall.positionY + newBall.velocityY > player2.positionY) {
-        newBall.speed += 0.05
+        newBall.speed += 0.2
         newBall.velocityX = -newBall.speed
     }
     //If ball bounces left or right wall
@@ -179,7 +183,13 @@ const animate = () => {
 //Function checks if either player has won after there has been a point scored
 //If player won, display necessary things
 const checkWin = () => {
-
+    if (player1.score >= winCondition || player2.score >= winCondition) {
+        //Player1 wins
+        player1.score >= winCondition ? alert("Player 1 has won!") : alert("Player 2 has won!")
+        isGameRunning = false
+        isGameOver = true
+        resetGame()
+    }
 }
 
 const resetGame = () => {
@@ -196,7 +206,10 @@ newBall.draw()
 
 //The game only runs when the mouse is inside of the canvas
 canvas.addEventListener("mouseover", (e) => {
-    animationFrame = window.requestAnimationFrame(animate);
+    setTimeout(() => {
+        animationFrame = window.requestAnimationFrame(animate);
+        isGameRunning = true
+    }, 3000)
 });
   
 canvas.addEventListener("mouseout", (e) => {
@@ -236,3 +249,7 @@ window.addEventListener("keyup", (key) => {
             break;
     }
 }, true)
+
+winConditionText.addEventListener('change', (e) => {
+    winCondition = winConditionText.value
+})
