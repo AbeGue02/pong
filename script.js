@@ -77,26 +77,26 @@ class Ball {
 };
 
 class Player {
-    constructor(newX, newY, newSize){
+    constructor(newX, newY, newSize, newScoreText){
         this.positionX = newX
         this.positionY = newY
         this.size = newSize
         this.score = 0
+        this.scoreText = newScoreText
     }
     draw() {
         ctx.fillStyle = "white";
         ctx.fillRect(this.positionX, this.positionY, DEFAULT_PLAYER_WIDTH, this.size)
     }
+    changeScore() {
+        this.score++
+        this.scoreText.innerHTML = this.score
+    }
 };
 
 const newBall = new Ball(canvas.width / 2, (canvas.height / 2) - (DEFAULT_BALL_SIZE / 2), 'white', 5)
-const player1 = new Player(DEFAULT_PLAYER_OFFSET, (canvas.height / 2) - DEFAULT_PLAYER_OFFSET, DEFAULT_PLAYER_HEIGHT)
-const player2 = new Player(canvas.width - DEFAULT_PLAYER_OFFSET - DEFAULT_PLAYER_WIDTH, (canvas.height / 2) - DEFAULT_PLAYER_OFFSET, DEFAULT_PLAYER_HEIGHT)
-
-const game = {
-    
-}
-
+const player1 = new Player(DEFAULT_PLAYER_OFFSET, (canvas.height / 2) - DEFAULT_PLAYER_OFFSET, DEFAULT_PLAYER_HEIGHT, document.getElementById('player1Score'))
+const player2 = new Player(canvas.width - DEFAULT_PLAYER_OFFSET - DEFAULT_PLAYER_WIDTH, (canvas.height / 2) - DEFAULT_PLAYER_OFFSET, DEFAULT_PLAYER_HEIGHT, document.getElementById('player2Score'))
 
 // FUNCTIONS
 
@@ -124,25 +124,29 @@ const animate = () => {
     newBall.positionY += newBall.velocityY;
     
     //This blob of code is used for ball movement
+
+    //If ball bounces off top/bottom wall
     if (
         newBall.positionY + newBall.velocityY > canvas.height - newBall.size ||
         newBall.positionY + newBall.velocityY < 0
     ) {
         newBall.velocityY = -newBall.velocityY;
     }
-    if (
-        newBall.positionX + newBall.velocityX < player1.positionX + DEFAULT_PLAYER_WIDTH && newBall.positionY + newBall.velocityY < player1.positionY + player1.size && newBall.positionY + newBall.velocityY >= player1.positionY ||
-        newBall.positionX + newBall.velocityX > player2.positionX - DEFAULT_PLAYER_WIDTH && newBall.positionY + newBall.velocityY < player2.positionY + player2.size && newBall.positionY + newBall.velocityY >= player2.positionY
-    ) {
-        // newBall.velocityX = -newBall.velocityX;
+    //If ball bounces player1 or player2
+    if (newBall.positionX + newBall.velocityX < player1.positionX + DEFAULT_PLAYER_WIDTH && newBall.positionX + newBall.velocityX > DEFAULT_PLAYER_OFFSET && newBall.positionY + newBall.velocityY < player1.positionY + player1.size && newBall.positionY + newBall.velocityY > player1.positionY) {
         newBall.speed += 0.05
-        newBall.velocityX = newBall.velocityX > 0 ? -newBall.speed :  newBall.speed
+        newBall.velocityX = newBall.speed
     }
+    if (newBall.positionX + newBall.velocityX + newBall.size > player2.positionX && newBall.positionX + newBall.velocityX + newBall.size < canvas.width - DEFAULT_PLAYER_OFFSET && newBall.positionY + newBall.velocityY < player2.positionY + player2.size && newBall.positionY + newBall.velocityY > player2.positionY) {
+        newBall.speed += 0.05
+        newBall.velocityX = -newBall.speed
+    }
+    //If ball bounces left or right wall
     if (
         newBall.positionX + newBall.velocityX > canvas.width - newBall.size ||
         newBall.positionX + newBall.velocityX < 0
     ) {
-        newBall.positionX + newBall.velocityX > canvas.width - newBall.size ? player1.score++ : player2.score++
+        newBall.positionX + newBall.velocityX > canvas.width - newBall.size ? player1.changeScore() : player2.changeScore()
 
         newBall.speed = 5
         newBall.positionX = canvas.width / 2

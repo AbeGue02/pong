@@ -6,6 +6,10 @@ button {
     font-family: 'Press Start 2P', system-ui;
 }
 
+input {
+    font-family: 'Press Start 2P', system-ui;
+}
+
 #gameArea {
     background-color: black;
 }
