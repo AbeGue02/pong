@@ -1,15 +1,78 @@
 html {
     font-family: 'Press Start 2P', system-ui;
+    color: white;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 1em;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(36, 36, 36);
+}
+
+h1 {
+    margin: 0 auto;
+    letter-spacing: 1em;
+    margin-block-start: 1.5em;
+    margin-block-end: 1.5em;
 }
 
 button {
     font-family: 'Press Start 2P', system-ui;
+    border: 0px;
+    border-radius: 30px;
+    padding: 1em;
+    background-color: gray;
+    color: white;
+}
+
+button:hover {
+    background-color: darkgray;
+    cursor: pointer;
 }
 
 input {
     font-family: 'Press Start 2P', system-ui;
+    color: white;
+    border: 0px;
+    background-color: gray;
+    padding: 1em;
+    margin: 1em;
+}
+
+#optionsContainer {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    margin: 1em;
+    justify-content: space-evenly;
+}
+
+#gameAreaContainer {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1em;
+}
+
+#gameAreaContainer p {
+    font-size: 3em;
 }
 
 #gameArea {
     background-color: black;
+}
+
+#winConditionContainer {
+    display: flex; 
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
 }

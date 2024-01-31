@@ -14,14 +14,17 @@
         <h1>PONG</h1>
         <div id="optionsContainer">
             <button class="options">2 Players</button>
-            <button class="options">Light Mode</button>
             <button class="options" onclick="resetGame()">Reset Game</button>
         </div>
         <div id="gameAreaContainer">
-            <p class="score" id="player1Score"></p>
+            <p class="score" id="player1Score">0</p>
             <canvas id="gameArea" height="500px" width="700px"></canvas>
-            <p class="score" id="player2Score"></p>
+            <p class="score" id="player2Score">0</p>
         </div>
-        <div><span>Win Condition: </span><input id="winCondition" type="number" min="1" max="10" value="5" required /></div>
+        <div id="winConditionContainer">
+            <span>Player 1 Controls: <br>W: up<br>S: down</span>
+            <span>Win Condition: </span><input id="winCondition" type="number" min="1" max="10" value="5" required />
+            <span>Player 2 Controls: <br>ArrowUp: up<br>ArrowDown: down</span>
+        </div>
     </body>
 </html>
