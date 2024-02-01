@@ -217,20 +217,22 @@ newBall.draw()
 
 //The game only runs when the mouse is inside of the canvas
 document.querySelector('#numOfPlayers').addEventListener('click', (e) => {
-    isOnePlayer = !isOnePlayer
-    document.querySelector('#numOfPlayers').innerHTML = isOnePlayer ? "1 Player" :  "2 Players"
+    if (!isGameRunning) {
+        isOnePlayer = !isOnePlayer
+        document.querySelector('#numOfPlayers').innerHTML = isOnePlayer ? "1 Player" :  "2 Players"
+    }
 })
 
 canvas.addEventListener("mouseover", async (e) => {
     setTimeout(() => {
         animationFrame = window.requestAnimationFrame(animate);
-    isGameRunning = true
+        isGameRunning = true
+        winConditionText.disabled = true
     }, 3000)
 });
   
 canvas.addEventListener("mouseout", (e) => {
     countDownTimer = 3
-    isGameRunning = false
     window.cancelAnimationFrame(animationFrame);
 });
 
