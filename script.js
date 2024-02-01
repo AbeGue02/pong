@@ -1,48 +1,3 @@
-/*
-    PSEUDOCODE:
-        VARIABLES NECESSARY:
-            - isTwoPlayers
-            - isLightMode
-            - isGameRunning
-            - WinCondition: BY DEFAULT 5 (X > 1 && X < 100)
-
-        CLASSES:
-            - Class for players: {
-                constructor {
-                    positionX
-                    positionY
-                    score: 0
-                    scoreText
-                    isComputer: false
-                }
-                scorePoint(int) {
-                    does all the necessary things to score points
-                        - Update score
-                        - Update score Text
-                    Takes in value to decide how many points are scored
-                }
-                move(int) {
-                    Takes an amount to move by and updates the position
-                }
-            }
-            - Ball class: {
-                constructor {
-                    positionX: 
-                    positionY: 
-                    speed: 
-                    pointsWorth:
-                }
-
-            }
-
-        FUNCTIONS NECESSARY: 
-            - pauseGame(bool): Pauses or resumes game
-            - resetGame(): Invokes pause game and resets everything to 0
-            - 
-
-
-*/
-
 const winConditionText = document.querySelector('#winCondition')
 const canvas = document.getElementById("gameArea");
 const ctx = canvas.getContext("2d");
@@ -182,10 +137,6 @@ const animate = () => {
         newBall.positionX + newBall.velocityX > canvas.width - newBall.size ? player1.changeScore() : player2.changeScore()
 
         newBall.resetPosition()
-
-        // newBall.speed = 5
-        // newBall.positionX = canvas.width / 2
-        // newBall.positionY = canvas.height / 2
     }
   
     animationFrame = window.requestAnimationFrame(animate);
