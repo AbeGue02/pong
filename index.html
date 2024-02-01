@@ -13,7 +13,7 @@
     <body>
         <h1>PONG</h1>
         <div id="optionsContainer">
-            <button class="options">2 Players</button>
+            <button class="options" id="numOfPlayers">2 Players</button>
             <button class="options" onclick="resetGame()">Reset Game</button>
         </div>
         <div id="gameAreaContainer">
@@ -22,9 +22,9 @@
             <p class="score" id="player2Score">0</p>
         </div>
         <div id="winConditionContainer">
-            <span>Player 1 Controls: <br>W: up<br>S: down</span>
+            <div><p>Player 1 Controls: </p><p>W: up</p><p>S: down</p></div>
             <span>Win Condition: </span><input id="winCondition" type="number" min="1" max="10" value="5" required />
-            <span>Player 2 Controls: <br>ArrowUp: up<br>ArrowDown: down</span>
+            <div><p>Player 2 Controls: </p><p>ArrowUp: up</p><p>ArrowDown: down</p></div>
         </div>
     </body>
 </html>

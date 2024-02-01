@@ -50,6 +50,8 @@ let isGameRunning = false
 let isGameOver = false
 let winCondition = 5
 let animationFrame;
+let isOnePlayer = false
+let countDownTimer = 3
 
 const DEFAULT_PLAYER_WIDTH = 25
 const DEFAULT_PLAYER_HEIGHT = 100
@@ -92,7 +94,7 @@ class Ball {
         }, 2000)
     }
     shoot() {
-        this.velocityX = Math.floor(Math.random() * 2) === 0 ? Math.floor(Math.random() * (this.speed - 2)) + 2 : -(Math.floor(Math.random() * (this.speed - 2)) + 2)
+        this.velocityX = Math.floor(Math.random() * 2) === 0 ? Math.floor(Math.random() * (this.speed - 2)) + 1 : -(Math.floor(Math.random() * (this.speed - 2)) + 1)
         this.velocityY = Math.floor(Math.random() * 2) === 0 ? this.speed - this.velocityX : -(this.speed - this.velocityX)
     }
 };
@@ -140,6 +142,15 @@ const animate = () => {
     }
     if (keysDown.down && player2.positionY <= canvas.height - player2.size) {
         player2.positionY += 5
+    }
+
+    if (isOnePlayer) {
+        player2.positionY = newBall.positionY + newBall.velocityY > player2.positionY ? player2.positionY += 5 : player2.positionY -= 5
+        if (player2.positionY < 0) {
+            player2.positionY = 0
+        } else if (player2.positionY + player2.size > canvas.height) {
+            player2.positionY = canvas.height - player2.size
+        }
     }
 
     newBall.positionX += newBall.velocityX;
@@ -205,14 +216,21 @@ newBall.draw()
 // Event Listeners
 
 //The game only runs when the mouse is inside of the canvas
-canvas.addEventListener("mouseover", (e) => {
+document.querySelector('#numOfPlayers').addEventListener('click', (e) => {
+    isOnePlayer = !isOnePlayer
+    document.querySelector('#numOfPlayers').innerHTML = isOnePlayer ? "1 Player" :  "2 Players"
+})
+
+canvas.addEventListener("mouseover", async (e) => {
     setTimeout(() => {
         animationFrame = window.requestAnimationFrame(animate);
-        isGameRunning = true
+    isGameRunning = true
     }, 3000)
 });
   
 canvas.addEventListener("mouseout", (e) => {
+    countDownTimer = 3
+    isGameRunning = false
     window.cancelAnimationFrame(animationFrame);
 });
 
@@ -225,10 +243,12 @@ window.addEventListener("keydown", (key) => {
             keysDown.s = true
             break;
         case "ArrowUp":
-            keysDown.up = true
+            if (!isOnePlayer)
+                keysDown.up = true
             break;
         case "ArrowDown":
-            keysDown.down = true
+            if (!isOnePlayer)
+                keysDown.down = true
             break;
     }
 }, true)
@@ -242,10 +262,12 @@ window.addEventListener("keyup", (key) => {
             keysDown.s = false
             break;
         case "ArrowUp":
-            keysDown.up = false
+            if (!isOnePlayer)
+                keysDown.up = false
             break;
         case "ArrowDown":
-            keysDown.down = false
+            if (!isOnePlayer)
+                keysDown.down = false
             break;
     }
 }, true)
