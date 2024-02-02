@@ -49,8 +49,10 @@ class Ball {
         }, 2000)
     }
     shoot() {
-        this.velocityX = Math.floor(Math.random() * 2) === 0 ? Math.floor(Math.random() * (this.speed - 2)) + 1 : -(Math.floor(Math.random() * (this.speed - 2)) + 1)
-        this.velocityY = Math.floor(Math.random() * 2) === 0 ? this.speed - this.velocityX : -(this.speed - this.velocityX)
+        setTimeout(() => {
+            this.velocityX = Math.floor(Math.random() * 2) === 0 ? Math.floor(Math.random() * (this.speed - 2)) + 1 : -(Math.floor(Math.random() * (this.speed - 2)) + 1)
+            this.velocityY = Math.floor(Math.random() * 2) === 0 ? this.speed - this.velocityX : -(this.speed - this.velocityX)    
+        }, 2000)
     }
 };
 
@@ -138,8 +140,8 @@ const animate = () => {
 
         newBall.resetPosition()
     }
-  
-    animationFrame = window.requestAnimationFrame(animate);
+    if (isGameRunning)
+        animationFrame = window.requestAnimationFrame(animate);
 }
 
 //Function checks if either player has won after there has been a point scored
@@ -175,15 +177,13 @@ document.querySelector('#numOfPlayers').addEventListener('click', (e) => {
 })
 
 canvas.addEventListener("mouseover", async (e) => {
-    setTimeout(() => {
-        animationFrame = window.requestAnimationFrame(animate);
-        isGameRunning = true
-        winConditionText.disabled = true
-    }, 3000)
+    animationFrame = window.requestAnimationFrame(animate);
+    isGameRunning = true
+    winConditionText.disabled = true
 });
   
 canvas.addEventListener("mouseout", (e) => {
-    countDownTimer = 3
+    isGameRunning = false
     window.cancelAnimationFrame(animationFrame);
 });
 
